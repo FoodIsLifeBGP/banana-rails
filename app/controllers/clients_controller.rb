@@ -31,11 +31,15 @@ class ClientsController < ApplicationController
   end
 
   def get_donations
-    # hardcoded for now, will be passed in from front end later
-    client_lat = 47.618249
-    client_long = -122.3520729
-    mode = Client.find(params[:id].to_i).transportation_method
+    client_lat = params[:latitude]
+    client_long = params[:longitude]
 
+    if client_lat.empty? || client_long.empty?
+      render json: { error: 'failed to provide current client position - params: latitude, longitude' }, status: :not_acceptable
+      return
+    end
+ 
+    mode = Client.find(params[:id].to_i).transportation_method
     case mode
     when 'walk'
       distance = 1.0
@@ -53,11 +57,12 @@ class ClientsController < ApplicationController
       (Time.now - d.created_at) / 60 < d.duration_minutes
     end
 
-    @reachable = @available.select do |donation|
+    @reachable = @available.select do |donation| 
       # Check distance from client to donor of donation
       Donor.find(donation.donor_id).distance_from([client_lat,client_long]) <= distance
     end
     render json: @reachable, include: 'claims', status: :ok
+
   end
 
   def get_claims
@@ -81,6 +86,8 @@ class ClientsController < ApplicationController
       :address_city,
       :address_zip,
       :address_state,
+      :latitude,
+      :longitude,
       :email,
       :ethnicity,
       :gender,

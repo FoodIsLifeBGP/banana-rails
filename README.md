@@ -58,6 +58,70 @@ You're done!  You can now move on to installing the Donor, Client, or Admin apps
 
 ## [Donor/Client](https://github.com/FoodIsLifeBGP/banana-rn)
 
+# Installation (Windows)
+
+All of The Banana App family (Donor, Client, & Admin) runs off of this backend.  Install this first.
+
+The following commands in Terminal will install:
+- GPG
+- RVM
+- Ruby 2.6.3
+- Rails
+- Postgres
+
+If you do not have a package manager you'll need [Chocolately](https://chocolatey.org/install) to install GPG.
+
+- `choco install gnupg`
+- `gpg --keyserver hkp://pool.sks-keyservers.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB`
+- `\curl -sSL https://get.rvm.io | bash`
+- `\curl -sSL https://get.rvm.io | bash -s stable --ruby`
+- `\curl -sSL https://get.rvm.io | bash -s stable --rails`
+- `gem install rails`
+- `gem install pg`
+
+Install Postgres by following the instructions on https://www.postgresql.org/.
+
+Back in Terminal, run
+- `sudo apt update`
+- `sudo apt install postgresql`
+- `sudo dpkg --configure -a`
+- `sudo apt-get remove libpq5`
+- `sudo apt-get install libpq-dev`
+- `git clone https://github.com/256hz/banana-rails.git && cd banana-rails`
+
+From inside `banana-rails`, run:
+- `bundle` (package installer)
+- `rails db:setup` (creates, migrates, and seeds your local DB)
+and finally
+- `rails s`
+to start the server.  Once that's running, your terminal should look something like:
+
+```terminal
+=> Booting Puma
+=> Rails 6.0.0 application starting in development 
+=> Run `rails server --help` for more startup options
+Puma starting in single mode...
+* Version 3.12.1 (ruby 2.6.3-p62), codename: Llamas in Pajamas
+* Min threads: 5, max threads: 5
+* Environment: development
+* Listening on tcp://localhost:3000
+Use Ctrl-C to stop
+```
+
+Once you see that, open a web browser, and navigate to `http://localhost:3000/donors/0/donations`.  If you see this:
+
+```json
+{
+	"message": "Please log in."
+}
+```
+
+You're done!  You can now move on to installing the Donor, Client, or Admin apps at the following URLs:
+
+## [Donor/Client](https://github.com/FoodIsLifeBGP/banana-rn)
+
+*If the localhost site does not display the desired json message please contact us with the results you are shown. This step in the installation is under development and testing.*
+
 ## Admin: TBD
 
 # Endpoints

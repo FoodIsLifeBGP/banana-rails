@@ -46,7 +46,7 @@ Puma starting in single mode...
 Use Ctrl-C to stop
 ```
 
-Once you see that, open a web browser, and navigate to `http://localhost:3000/donors/0/donations`.  If you see this:
+Once you see that, open a web browser, and navigate to `http://localhost:3000`.  If you see this:
 
 ```json
 {

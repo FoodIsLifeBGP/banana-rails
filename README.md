@@ -11,10 +11,10 @@ Banana App is an open-source, not-for-profit project of The Be Good Foundation. 
 
   - Why we want to use docker:
     
-    - From the previous experience, developers using windows could suffer from configuring the environment, downloading the postgres database and many other things like the version of ruby, and docker is a convenient solution to solve all those problems so beginners need only focus on project structure and project development. 
+    - From the previous experience, developers using windows could suffer from configuring the environment, downloading the Postgres database and many other things like the version of ruby, and docker is a convenient solution to solve all those problems so beginners need only focus on project structure and project development. 
 - If you do not know docker before, just think it as a manager of virtual machines. Our project would run in those virtual machines with no dependency on the environment of your machine.
   
-- Make sure there is no running program in your 5432 port, which is the default port for postgresql where we would map the database container to. 
+- Make sure there is no running program in your 5432 port, which is the default port for Postgresql where we would map the database container to. 
 
   - you might find `lsof -i:[port]` and `kill [pid]` useful
 
@@ -46,7 +46,9 @@ Banana App is an open-source, not-for-profit project of The Be Good Foundation. 
 
   **[Donor/Client](https://github.com/FoodIsLifeBGP/banana-rn)**
 
-- The docker offers hot reload features by synchornzing the files between project directory and container directory, for more details, look at comment at `volumes` configuration under `docker-compose.yml` file in the project root directory.
+- The docker offers hot reload features so every modification of files under the project directory would be updated in real time, and there is no need to restart the backend server.
+
+  - The underlying mechanism is that docker synchronizes the files between project directory and container directory. For more details, look at comment at `volumes` configuration under `docker-compose.yml` file in the project root directory.
 
 ## Admin: TBD
 

@@ -92,7 +92,7 @@ Banana App is an open-source, not-for-profit project of The Be Good Foundation. 
 
   to build and run the docker environment.
 
-- Run the command 
+- Run the command in a new terminal window
 
   ```
   docker-compose run web rails db:setup

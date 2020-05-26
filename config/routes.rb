@@ -22,4 +22,9 @@ Rails.application.routes.draw do
 
   post 'claims/create', to: 'claims#create'
   patch 'claims/:id/update', to: 'claims#update'
+
+  post 'password_resets/:user', to: 'password_resets#create'
+  get 'password_resets/:user/:token', to: 'password_resets#edit'   
+  patch 'password_resets/:user/:token', to: 'password_resets#update'
+
 end

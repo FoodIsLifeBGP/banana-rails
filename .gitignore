@@ -22,3 +22,6 @@
 /config/master.key
 # Ignore docker local storage of containers
 /tmp/*
+
+# ignore .env files
+dev.env

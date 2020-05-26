@@ -11,7 +11,6 @@ class Client < ApplicationRecord
 	validates :account_status, presence: true
 	#validates :ethnicity, presence: false
 	#validates :gender, presence: false
-    validates :password, presence: true
     validates :first_name, presence: true
     validates :last_name, presence: true
 end

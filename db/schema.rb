@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_164629) do
+ActiveRecord::Schema.define(version: 2020_05_28_234911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -95,6 +95,17 @@ ActiveRecord::Schema.define(version: 2020_05_08_164629) do
     t.string "business_phone_number"
     t.integer "business_doc_id"
     t.string "profile_pic_link"
+  end
+
+  create_table "password_resets", force: :cascade do |t|
+    t.string "reset_token"
+    t.datetime "reset_sent_at"
+    t.string "ip"
+    t.string "resettable_type"
+    t.bigint "resettable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["resettable_type", "resettable_id"], name: "index_password_resets_on_resettable_type_and_resettable_id"
   end
 
   create_table "rpush_apps", force: :cascade do |t|

@@ -55,7 +55,6 @@ class DonorsController < ApplicationController
 			render json: @donor
 		else
 			failure_message = { error: "Donor id: #{params[:id]} was not updated. #{@donor.errors.full_messages}" }
-			puts failure_message
 			render json: failure_message
 		end
 	end

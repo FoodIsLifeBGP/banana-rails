@@ -1,6 +1,8 @@
 class Donor < ApplicationRecord
 	has_secure_password
 
+	has_many :password_resets, as: :resettable
+
 	has_many :donations
 	has_many :claims, through: :donations
 	accepts_nested_attributes_for :claims
@@ -26,4 +28,5 @@ class Donor < ApplicationRecord
 	def address
 		[address_street, address_city, address_state, "US"].compact.join(', ')
 	end
+	
 end

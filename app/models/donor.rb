@@ -5,9 +5,9 @@ class Donor < ApplicationRecord
 	has_many :claims, through: :donations
 	accepts_nested_attributes_for :claims
 
-	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
-	validates :first_name, presence: false
-	validates :last_name, presence: false
+	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, uniqueness: { case_sensitive: false }
+	validates :first_name, presence: true
+	validates :last_name, presence: true
 	validates :address_street, presence: true
 	validates :address_city, presence: true
 	validates :address_state, presence: true

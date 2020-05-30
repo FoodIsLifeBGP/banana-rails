@@ -4,8 +4,8 @@ class Client < ApplicationRecord
 	has_many :claims
 
 	validates :email, format: { with: URI::MailTo::EMAIL_REGEXP } 
-	validates :first_name, presence: false
-	validates :last_name, presence: false
+	validates :first_name, presence: true
+	validates :last_name, presence: true
 	validates :address_street, presence: true
 	validates :address_city, presence: true
 	validates :address_state, presence: true

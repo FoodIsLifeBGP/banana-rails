@@ -1,0 +1,55 @@
+# Extensions
+require:
+  - rubocop-rails
+
+# Must excplicitly enable/disable new cops between major version releases
+# More info: https://docs.rubocop.org/en/latest/versioning/
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
+
+# Cops we purposefully modified/disabled
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+Style/Documentation:
+  Enabled: false
+Naming/AccessorMethodName:
+  Enabled: false
+Metrics/MethodLength:
+  Max: 13
+
+# TODO: keep? remove?
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+# Cop files-to-ignore
+AllCops:
+  Exclude:
+    - Gemfile
+    - Rakefile
+    - 'config.ru'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+    - '.git/**/*'
+    - 'db/schema.rb'
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'app/jobs/*'
+    - 'app/mailers/**/*'
+    - 'app/channels/**/*'
+    # Original migration files
+    - 'db/migrate/2019*'
+
+Layout/LineLength:
+  Max: 110
+  # Ignores comments
+  IgnoredPatterns: ['(\A|\s)#']
+

@@ -77,7 +77,6 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
     get '/donations/active', params: {client_lat: 46.609175 , client_long: -122.325849}, headers: auth_header({client_id: 1})
     res_obj = JSON.parse @response.body
     assert_equal [], res_obj, 'should have returned empty array'
-
   end
 
 end

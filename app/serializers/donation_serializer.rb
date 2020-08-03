@@ -9,8 +9,9 @@ class DonationSerializer < ActiveModel::Serializer
     :pickup_instructions,
     :status,
     :distance,
-    :donor
-  #only return donor address info
+    :donor,
+    :claim
+  #only return donor address info and location
   def donor
     {address_city: self.object.donor.address_city,
      address_street: self.object.donor.address_street,
@@ -19,6 +20,11 @@ class DonationSerializer < ActiveModel::Serializer
      latitude: self.object.donor.latitude,
      longitude: self.object.donor.longitude,
      donor_name: self.object.donor.organization_name}
+  end
+
+  def claim
+    self.object.claims[0].nil? ? nil : {client_name: self.object.claims[0].client.first_name,
+                                        qr_code: self.object.claims[0].qr_code}
   end
 
 end

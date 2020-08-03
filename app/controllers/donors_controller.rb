@@ -86,19 +86,17 @@ class DonorsController < ApplicationController
 	end
 
 	def scan_qr_code
-		claim = JSON.parse(Base64.decode64(params[:qr_code]))
-		@claim = Claim.find_by(client_id: claim.client_id, donation_id: claim.donation_id)
-		if @claim
-			if !@claim.completed
-				@claim.completed = true
-				@claim.save
-				render json: { message: 'claim completed' }, status: :accepted
-				return
-			else
-				render json: { error: 'claim has already been completed'}, status: :unprocessable_entity
-			end
+		qr_object = JSON.parse(Base64.decode64(params[:qr_code]))
+		claim = Claim.where(client: qr_object['client_id'], donation_id: qr_object['donation_id'], status: ClaimStatus::ACTIVE).first
+		if claim
+			claim.status = ClaimStatus::CLOSED
+			donation = Donation.find(claim.donation_id)
+			donation.status = DonationStatus::CLOSED
+			claim.save
+			donation.save
+			render json: { message: 'claim completed' }, status: :accepted
 		else
-			render json: { error: 'claim not found' }, status: :unprocessable_entity
+			render json: { error: 'claim not found'}, status: :unprocessable_entity
 		end
 	end
 

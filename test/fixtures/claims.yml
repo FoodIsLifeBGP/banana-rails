@@ -18,5 +18,5 @@ three:
   id: 3
   client_id: 1
   donation_id: 4
-  qr_code: Foobar
+  qr_code: <%= Base64.encode64({ 'client_id': 1, 'donation_id': 4 }.to_json).chomp %>
   status: <%= ClaimStatus::ACTIVE %>

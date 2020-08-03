@@ -74,4 +74,27 @@ class DonorsControllerTest < ActionDispatch::IntegrationTest
     assert statuses.include?(DonationStatus::CLAIMED)
   end
 
+  test "get active donations includes claim info" do
+    get '/donors/1/get_active_donations', headers: auth_header({donor_id: 1})
+    active_donations_api = JSON.parse @response.body
+    claimedDonation = active_donations_api.select { |d| d['status'] == DonationStatus::CLAIMED }.first
+    assert_not_nil claimedDonation['claim']['client_name']
+    qr_code = claimedDonation['claim']['qr_code']
+    assert_not_nil qr_code
+    claim_info = JSON.parse(Base64.decode64(qr_code))
+    assert_equal 4, claim_info['donation_id'], 'donation id should be 4'
+  end
+
+  test "scan qr code should mark claim and donation as closed, return 202" do
+    claim = Claim.where(client_id: 1, donation_id: 4).first
+    assert_equal ClaimStatus::ACTIVE, claim.status, 'claim should start open'
+    post '/donors/scan', params: {qr_code: Base64.encode64({ 'client_id': 1, 'donation_id': 4 }.to_json.chomp)}, headers: auth_header({donor_id: 1})
+    assert_response :success
+    claim = Claim.where(client_id: 1, donation_id: 4).first
+    assert_equal ClaimStatus::CLOSED, claim.status, 'claim should have been closed'
+    donation = Donation.find(4)
+    assert_equal DonationStatus::CLOSED, donation.status, 'donation should be closed'
+  end
+
+
 end

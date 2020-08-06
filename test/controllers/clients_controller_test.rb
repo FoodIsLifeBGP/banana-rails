@@ -49,4 +49,12 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
     assert_response :bad_request
   end
 
+  test "get claims for client" do
+    get '/clients/1/get_claims', headers: auth_header({client_id: 1})
+    assert_response :success
+    claims = JSON.parse @response.body
+    puts claims
+    assert_equal 1, claims.size, 'should only be one active/pending claim'
+  end
+
 end

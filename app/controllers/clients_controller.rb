@@ -117,15 +117,14 @@ class ClientsController < ApplicationController
   end
 
   def get_claims
-    @user = Client.find(params[:id])
-    @claims = @user.claims
-    @claims_to_return = @claims.as_json
-    @claims.each_with_index { |claim, i|
-      @claims_to_return[i]['address'] = claim.donation.donor.address
-      @claims_to_return[i]['donor'] = claim.donation.donor.organization_name
-      @claims_to_return[i]['donation'] = claim.donation.as_json
-    }
-    render json: @claims_to_return, status: :ok
+    active_claims_for_client = Claim.where client_id: params[:id].to_i, status: ClaimStatus::ACTIVE
+    donations = active_claims_for_client.map(&:donation)
+    still_active = expire_donations(donations)
+    if params[:client_lat] && params[:client_long]
+      client_coords = [params[:client_lat].to_f, params[:client_long].to_f]
+      still_active.each {|d| d.distance = d.donor.distance_to(client_coords)}
+    end
+    render json: still_active, status: :ok
   end
 
   private

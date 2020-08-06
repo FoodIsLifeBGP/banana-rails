@@ -282,7 +282,7 @@ donation10 = Donation.create(
 )
 donation11 = Donation.create(
 		food_name: "Leftovers from a meeting",
-		donor_id: donor11.id,
+		donor_id: donor12.id,
 		pickup_instructions: 'in the warehouse',
 		category: DonationCategory::HOT_MEAL,
 		total_amount: "3 dinner plates",

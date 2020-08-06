@@ -3,6 +3,7 @@ class ClaimSerializer < ActiveModel::Serializer
     :client_id,
     :created_at,
     :donation,
+    :status,
     :qr_code,
     :updated_at
 end

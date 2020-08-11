@@ -12,7 +12,7 @@ services:
       - "5432:5432"
   web:
     build: .
-    command: bash -c "rails db:drop && rails db:setup && rails s -p 3000 -b '0.0.0.0'"
+    command: bash -c "rails db:drop && rails db:setup && rails s -b 'ssl://dev.bananaapp.org:3000?key=localhost.key&cert=localhost.crt'"
     ## map all the files from current file to /bananrails in the web container
     ## where the hot reload features from
     volumes:

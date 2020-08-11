@@ -18,7 +18,7 @@ jobs:
             cd banana-rails || exit 1
             docker-compose down
             cd ..
-            rm -rf banana-rails
+            sudo rm -rf banana-rails
             git clone -b ssl-and-dns git@github.com:FoodIsLifeBGP/banana-rails.git --depth=1
             cd banana-rails || exit 1
             docker-compose up -d

@@ -2,7 +2,7 @@ name: Staging deploy
 on:
   push:
     branches:
-      - ssl-and-dns
+      - prealpha/main
 jobs:
   deploy:
     name: deploy to staging
@@ -19,6 +19,6 @@ jobs:
             docker-compose down
             cd ..
             sudo rm -rf banana-rails
-            git clone -b ssl-and-dns git@github.com:FoodIsLifeBGP/banana-rails.git --depth=1
+            git clone git@github.com:FoodIsLifeBGP/banana-rails.git --depth=1
             cd banana-rails || exit 1
             docker-compose up -d

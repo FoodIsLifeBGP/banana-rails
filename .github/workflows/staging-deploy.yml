@@ -16,9 +16,9 @@ jobs:
           username: ec2-user
           script: |
             cd banana-rails || exit 1
-            sudo docker-compose down
+            docker-compose down
             cd ..
-            sudo rm -rf banana-rails
+            rm -rf banana-rails
             git clone -b ssl-and-dns git@github.com:FoodIsLifeBGP/banana-rails.git --depth=1
             cd banana-rails || exit 1
-            sudo docker-compose up -d
+            docker-compose up -d

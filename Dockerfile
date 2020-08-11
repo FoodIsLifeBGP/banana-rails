@@ -11,9 +11,3 @@ RUN gem install pg -v '1.1.4' --source 'https://rubygems.org/'
 
 COPY . /banana-rails
 
-# executable
-COPY entrypoint.sh /usr/bin/
-RUN chmod +x /usr/bin/entrypoint.sh
-ENTRYPOINT ["entrypoint.sh"]
-EXPOSE 3000
-

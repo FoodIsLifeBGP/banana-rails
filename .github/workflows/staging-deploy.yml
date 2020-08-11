@@ -13,7 +13,7 @@ jobs:
         with:
           host: ${{ secrets.STG_SERVER_WEST }}
           key: ${{ secrets.STG_PRIVATE_KEY_WEST }}
-          username: ubuntu
+          username: ec2-user
           script: |
             cd banana-rails || exit 1
             sudo docker-compose down

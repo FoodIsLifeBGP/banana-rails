@@ -8,6 +8,17 @@ class DonationsController < ApplicationController
 		render json: Donation.all
 	end
 
+    def donations_history
+        id = params[:donor_id].to_i
+        closed_donations_in_db = Donation.where(:status => [DonationStatus::CLOSED, DonationStatus::EXPIRED], donor_id: id).order("updated_at DESC").limit(50)
+        render json: closed_donations_in_db
+    end
+
+    def claims_history
+        id = params[:client_id].to_i
+        closed_claims_in_db = Claim.where(:status =>  [ClaimStatus::CLOSED], client_id: id).order("updated_at DESC").limit(50)
+        render json: closed_claims_in_db
+    end
 
 	def active
 		@active_donations_in_db = Donation.where status: DonationStatus::ACTIVE

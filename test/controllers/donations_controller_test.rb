@@ -48,6 +48,32 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
     assert_equal DonationStatus::DELETED, donation_in_db.status, 'should have changed status to deleted'
   end
 
+  test "donations history returns list of closed and expired donations" do
+    get '/donations/1/history_donations', headers: auth_header({donor_id: 1})
+    assert_response :success
+    history = JSON.parse @response.body
+    donation_in_db = Donation.where(:donor_id => 1, :status => [DonationStatus::CLOSED, DonationStatus::EXPIRED]).order("updated_at desc").limit(3)
+    assert_equal history.count,donation_in_db.count, 'Incorrect number of donations received in the response'
+    i = 0
+    donation_in_db.each do |donation|
+      assert_equal donation.status, history[i]['status'], 'The status of donation: #{history[i]["id"]}, is invalid'
+      i +=1
+    end
+  end
+
+  test "claims history returns list of closed claims" do
+    get '/donations/1/history_claims', headers: auth_header({client_id: 1})
+    assert_response :success
+    history = JSON.parse @response.body
+    claim_in_db = Claim.where(:client_id => 1, :status => [ClaimStatus::CLOSED]).order("updated_at desc").limit(3)
+    assert_equal history.count,claim_in_db.count, 'Incorrect number of claims received in the response'
+    i = 0
+    claim_in_db.each do |claim|
+      assert_equal claim.status, history[i]['status'], 'The status of claim: #{history[i]["id"]}, is invalid'
+      i +=1
+    end
+  end
+
   test "only updates to donations owned by logged in donor" do
     patch '/donations/2/update', params: {donation: {id:2, status:DonationStatus::DELETED}}, headers: auth_header({donor_id: 2})
     assert_response :unauthorized

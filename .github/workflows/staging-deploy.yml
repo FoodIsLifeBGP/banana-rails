@@ -22,7 +22,7 @@ jobs:
             docker-compose down
             cd ..
             sudo rm -rf banana-rails
-            git clone git@github.com:FoodIsLifeBGP/banana-rails.git --depth=1
+            git clone -b here-endpoint git@github.com:FoodIsLifeBGP/banana-rails.git --depth=1
             cd banana-rails || exit 1
             echo "HERE_API_KEY=$HERE_API_KEY" >> dev.env
             docker-compose up -d

@@ -62,15 +62,13 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "claims history returns list of closed claims" do
-    get '/donations/1/history_claims', headers: auth_header({client_id: 1})
+ get '/donations/1/history_claims', headers: auth_header({client_id: 1})
     assert_response :success
     history = JSON.parse @response.body
-    claim_in_db = Claim.where(:client_id => 1, :status => [ClaimStatus::CLOSED]).order("updated_at desc").limit(3)
+    claim_in_db = Claim.where(:client_id => 1, :status => [ClaimStatus::CLOSED]).order("updated_at desc")
     assert_equal history.count,claim_in_db.count, 'Incorrect number of claims received in the response'
-    i = 0
-    claim_in_db.each do |claim|
-      assert_equal claim.status, history[i]['status'], 'The status of claim: #{history[i]["id"]}, is invalid'
-      i +=1
+    claim_in_db.each_with_index do |claim, i|
+      assert_equal claim.status, history[i]['status'], "The status of claim: #{history[i]['id']}, is invalid"
     end
   end
 

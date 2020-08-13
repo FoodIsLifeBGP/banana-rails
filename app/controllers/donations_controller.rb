@@ -9,7 +9,11 @@ class DonationsController < ApplicationController
 	end
 
     def donations_history
-        id = params[:donor_id].to_i
+     id = params[:donor_id].to_i
+				authorized_id = decoded_token[0]['donor_id']
+				if authorized_id != id
+					return render json: { error: 'unauthorized'}, status: :unauthorized
+				end
         closed_donations_in_db = Donation.where(:status => [DonationStatus::CLOSED, DonationStatus::EXPIRED], donor_id: id).order("updated_at DESC").limit(50)
         render json: closed_donations_in_db
     end

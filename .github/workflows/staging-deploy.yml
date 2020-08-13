@@ -2,7 +2,7 @@ name: Staging deploy
 on:
   push:
     branches:
-      - prealpha/main
+      - here-endpoint
 jobs:
   deploy:
     name: deploy to staging
@@ -10,10 +10,13 @@ jobs:
     steps:
       - name: ssh to staging server, stop services, get fresh checkout, restart services
         uses: appleboy/ssh-action@master
+        env:
+          HERE_API_KEY: ${{ secrets.HERE_API_KEY }}
         with:
           host: ${{ secrets.STG_SERVER_WEST }}
           key: ${{ secrets.STG_PRIVATE_KEY_WEST }}
           username: ec2-user
+          envs: HERE_API_KEY
           script: |
             cd banana-rails || exit 1
             docker-compose down
@@ -21,4 +24,5 @@ jobs:
             sudo rm -rf banana-rails
             git clone git@github.com:FoodIsLifeBGP/banana-rails.git --depth=1
             cd banana-rails || exit 1
+            echo "HERE_API_KEY=$HERE_API_KEY" >> dev.env
             docker-compose up -d

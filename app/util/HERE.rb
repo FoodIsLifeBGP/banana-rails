@@ -2,30 +2,37 @@ require 'net/http'
 require 'json'
 class HEREAPI
 
-    def self.getTime( lat,lon,lat2, lon2, mode=car,rounding=2)
-        case mode
-            when 'public'
-                link ='https://route.ls.hereapi.com/routing/7.2/calculateroute.json?apiKey=16lU5PcIP-Gc8OzaFRjc9h8x1g29ZdE9IQJKq9pYqCI&waypoint0=geo!'+lat.to_s+','+lon.to_s+'&waypoint1=geo!'+lat2.to_s+','+lon2.to_s+'&mode=fastest;publicTransport;traffic:disabled'
-            when "bike"
-                link ='https://route.ls.hereapi.com/routing/7.2/calculateroute.json?apiKey=16lU5PcIP-Gc8OzaFRjc9h8x1g29ZdE9IQJKq9pYqCI&waypoint0=geo!'+lat.to_s+','+lon.to_s+'&waypoint1=geo!'+lat2.to_s+','+lon2.to_s+'&mode=fastest;bicycle;traffic:disabled'
-            else
-                link ='https://route.ls.hereapi.com/routing/7.2/calculateroute.json?apiKey=16lU5PcIP-Gc8OzaFRjc9h8x1g29ZdE9IQJKq9pYqCI&waypoint0=geo!'+lat.to_s+','+lon.to_s+'&waypoint1=geo!'+lat2.to_s+','+lon2.to_s+'&mode=fastest;car;traffic:disabled'
-
+    class PointLocation
+        attr_reader :latitude, :longitude
+        def initialize(latitude, longitude)
+            @latitude = latitude
+            @longitude = longitude
         end
-    
-        uri = URI(link)
-        res = Net::HTTP.get_response(uri)
-        res_data = JSON.parse(res.body)
-        time = res_data['response']['route'][0]['summary']['travelTime']/60.0 if res.is_a?(Net::HTTPSuccess)
-        time = time.round(rounding)
-  #  puts(time)
-        return time
+    end
 
+    module TravelMode
+        BIKE = 'bicycle'
+        CAR = 'car'
+        PUBLIC_TRANSPORT = 'publicTransport'
+    end
+
+    def self.get_time(origin, destination, travel_mode=TravelMode::CAR, rounding=2)
+        here_url = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json?apiKey=%<here_key>s&waypoint0=geo!%<origin_lat>s"\
+                    ",%<origin_long>s&waypoint1=geo!%<dest_lat>s,%<dest_long>s&representation=overview&mode=fastest;%<travel_mode>s;traffic:#{travel_mode == TravelMode::CAR ? 'enabled' : 'disabled'}"
+                    .% origin_lat: origin.latitude, origin_long: origin.longitude, dest_lat: destination.latitude,
+                    dest_long: destination.longitude, travel_mode: travel_mode, here_key: ENV["HERE_API_KEY"]
+        uri = URI(here_url)
+        res = Net::HTTP.get_response(uri)
+        unless res.is_a? Net::HTTPSuccess
+            puts res.body
+            return "Error: #{res.message}"
+        end
+        begin
+            res_data = JSON.parse(res.body)
+            time = res_data['response']['route'][0]['summary']['travelTime'] / 60.0
+            time.round(rounding)
+        rescue
+            return "Error: could not parse JSON response"
+        end
     end
 end
-
-
-
-#waypoint0=geo!52.5,13.4&waypoint1=geo!52.5,13.45
-puts HEREAPI.getTime(52.5,13.4,52.5,13.45,'bike')
-puts("complete")

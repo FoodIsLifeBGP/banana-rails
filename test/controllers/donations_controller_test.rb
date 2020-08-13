@@ -49,15 +49,13 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "donations history returns list of closed and expired donations" do
-    get '/donations/1/history_donations', headers: auth_header({donor_id: 1})
+ get '/donations/1/history_donations', headers: auth_header({donor_id: 1})
     assert_response :success
     history = JSON.parse @response.body
-    donation_in_db = Donation.where(:donor_id => 1, :status => [DonationStatus::CLOSED, DonationStatus::EXPIRED]).order("updated_at desc").limit(3)
+    donation_in_db = Donation.where(:donor_id => 1, :status => [DonationStatus::CLOSED, DonationStatus::EXPIRED]).order("updated_at desc")
     assert_equal history.count,donation_in_db.count, 'Incorrect number of donations received in the response'
-    i = 0
-    donation_in_db.each do |donation|
-      assert_equal donation.status, history[i]['status'], 'The status of donation: #{history[i]["id"]}, is invalid'
-      i +=1
+    donation_in_db.each_with_index do |donation, i|
+      assert_equal donation.status, history[i]['status'], "The status of donation: #{history[i]['id']}, is invalid"
     end
   end
 

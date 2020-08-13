@@ -49,7 +49,7 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "donations history returns list of closed and expired donations" do
- get '/donations/1/history_donations', headers: auth_header({donor_id: 1})
+    get '/donations/1/history_donations', headers: auth_header({donor_id: 1})
     assert_response :success
     history = JSON.parse @response.body
     donation_in_db = Donation.where(:donor_id => 1, :status => [DonationStatus::CLOSED, DonationStatus::EXPIRED]).order("updated_at desc")
@@ -60,7 +60,7 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "claims history returns list of closed claims" do
- get '/donations/1/history_claims', headers: auth_header({client_id: 1})
+    get '/donations/1/history_claims', headers: auth_header({client_id: 1})
     assert_response :success
     history = JSON.parse @response.body
     claim_in_db = Claim.where(:client_id => 1, :status => [ClaimStatus::CLOSED]).order("updated_at desc")

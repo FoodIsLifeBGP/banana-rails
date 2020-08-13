@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   patch 'donations/:id/update', to: 'donations#update'
   post 'donations/:id/claim', to: 'donations#make_claim'
   get 'donations/active', to: 'donations#active'
+  get 'donations/:donor_id/history_donations', to: 'donations#donations_history'
+  get 'donations/:client_id/history_claims', to: 'donations#claims_history'
 
   get 'clients/:id/get_claims', to: 'clients#get_claims'
   post 'client_auth', to: 'client_auth#create'

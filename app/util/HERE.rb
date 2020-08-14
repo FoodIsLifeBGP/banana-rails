@@ -14,6 +14,7 @@ class HEREAPI
         BIKE = 'bicycle'
         CAR = 'car'
         PUBLIC_TRANSPORT = 'publicTransport'
+        PEDESTRIAN = 'pedestrian'
     end
 
     def self.get_time(origin, destination, travel_mode=TravelMode::CAR, rounding=0)

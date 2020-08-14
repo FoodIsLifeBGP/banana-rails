@@ -73,7 +73,7 @@ class ClientsController < ApplicationController
     origin = HEREAPI::PointLocation.new(params[:client_lat].to_f, params[:client_long].to_f)
     dest = HEREAPI::PointLocation.new(donor.latitude, donor.longitude)
     mode_to_time = Hash.new
-    [HEREAPI::TravelMode::BIKE, HEREAPI::TravelMode::CAR, HEREAPI::TravelMode::PUBLIC_TRANSPORT]
+    [HEREAPI::TravelMode::BIKE, HEREAPI::TravelMode::PEDESTRIAN, HEREAPI::TravelMode::PUBLIC_TRANSPORT]
                       .each { |mode| mode_to_time[mode] = HEREAPI::get_time(origin, dest, mode) }
     mode_to_time.delete_if { |k,v| !v.is_a? Numeric }
     render json: mode_to_time, status: mode_to_time.empty? ? :not_found : :ok

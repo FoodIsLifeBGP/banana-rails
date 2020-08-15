@@ -14,9 +14,10 @@ class HEREAPI
         BIKE = 'bicycle'
         CAR = 'car'
         PUBLIC_TRANSPORT = 'publicTransport'
+        PEDESTRIAN = 'pedestrian'
     end
 
-    def self.get_time(origin, destination, travel_mode=TravelMode::CAR, rounding=2)
+    def self.get_time(origin, destination, travel_mode=TravelMode::CAR, rounding=0)
         here_url = "https://route.ls.hereapi.com/routing/7.2/calculateroute.json?apiKey=%<here_key>s&waypoint0=geo!%<origin_lat>s"\
                     ",%<origin_long>s&waypoint1=geo!%<dest_lat>s,%<dest_long>s&representation=overview&mode=fastest;%<travel_mode>s;traffic:#{travel_mode == TravelMode::CAR ? 'enabled' : 'disabled'}"
                     .% origin_lat: origin.latitude, origin_long: origin.longitude, dest_lat: destination.latitude,
@@ -24,7 +25,6 @@ class HEREAPI
         uri = URI(here_url)
         res = Net::HTTP.get_response(uri)
         unless res.is_a? Net::HTTPSuccess
-            puts res.body
             return "Error: #{res.message}"
         end
         begin

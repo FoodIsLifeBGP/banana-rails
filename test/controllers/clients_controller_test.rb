@@ -4,30 +4,30 @@ require 'test_helper'
 class ClientsControllerTest < ActionDispatch::IntegrationTest
 
   test "we return 409 status code in the event the client email is already present in the db" do
-    post clients_create_url, params: {client: { email: "client@client.com", password: "does not matter",
-                                                   address_zip: 90210}}
+    post clients_create_url, params: {client: {email: "client@client.com", password: "does not matter",
+                                               address_zip: 90210}}
     assert_response :conflict
   end
 
   test "we successfully register a new client" do
-    post clients_create_url, params: {client: { email: "notindb@notindb.com", password: "password1!",
-                                                address_zip: 90210, first_name: "Newname", last_name: "Client"}}
+    post clients_create_url, params: {client: {email: "notindb@notindb.com", password: "password1!",
+                                               address_zip: 90210, first_name: "Newname", last_name: "Client"}}
     assert_response :success
     just_added = Client.find_by_email("notindb@notindb.com")
     assert_not_nil just_added
   end
 
   test "we successfully register a new client and account status defaults to processing" do
-    post clients_create_url, params: {client: { email: "acc_status_notindb@notindb.com", password: "password1!",
-                                                address_zip: 90210, first_name: "Newname", last_name: "Client"}}
+    post clients_create_url, params: {client: {email: "acc_status_notindb@notindb.com", password: "password1!",
+                                               address_zip: 90210, first_name: "Newname", last_name: "Client"}}
     assert_response :success
     just_added = Client.find_by_email("acc_status_notindb@notindb.com")
     assert_equal AccountStatus::PROCESSING, just_added.account_status, "account_status should have defaulted to #{AccountStatus::PROCESSING}"
   end
 
   test "data that fails client registration returns an error response and doesn't write to db" do
-    post clients_create_url, params: {client: { email: "acc_status_notindb@notindb.com", password: "password",
-                                                address_zip: 90210, first_name: "Newname", last_name: "Client"}}
+    post clients_create_url, params: {client: {email: "acc_status_notindb@notindb.com", password: "password",
+                                               address_zip: 90210, first_name: "Newname", last_name: "Client"}}
     assert_response :bad_request
     res_obj = JSON.parse @response.body
     assert_equal 'Password is invalid', res_obj['errors'][0], 'should have returned invalid password'
@@ -53,8 +53,19 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
     get '/clients/1/get_claims', headers: auth_header({client_id: 1})
     assert_response :success
     claims = JSON.parse @response.body
-    puts claims
     assert_equal 1, claims.size, 'should only be one active/pending claim'
+  end
+
+  test "get travel times to donation for client" do
+    coords = Geocoder.coordinates("800 8th Ave Seattle, WA")
+    puts coords
+    get "/clients/1/travel_times?client_lat=#{coords[0]}&client_long=#{coords[1]}", headers: auth_header({client_id: 1})
+    #eventually we'll want to figure out how to pass this secret to tests
+    if ENV["HERE_API_KEY"]
+      assert_response :success
+    else
+      assert_response :not_found
+    end
   end
 
 end

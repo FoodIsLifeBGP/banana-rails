@@ -3,7 +3,6 @@ Rails.application.routes.draw do
 
   get 'donors/:id/get_donations', to: 'donors#get_donations'
   get 'donors/:id/get_active_donations', to: 'donors#get_active_donations'
-  post 'donors/:id/activate', to: 'donors#activate'
   patch 'donors/:id/updateStatus', to: 'donors#account_status_update'
   post 'donor_auth', to: 'donor_auth#create'
   post 'donors/create', to: 'donors#create'
@@ -18,6 +17,7 @@ Rails.application.routes.draw do
   get 'donations/:client_id/history_claims', to: 'donations#claims_history'
 
   get 'clients/:id/get_claims', to: 'clients#get_claims'
+  get 'clients/:donorid/travel_times', to: 'clients#get_travel_times'
   post 'client_auth', to: 'client_auth#create'
   post 'clients/create', to: 'clients#create'
   patch 'clients/:id/updateStatus', to: 'clients#account_status_update'

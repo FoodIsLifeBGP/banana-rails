@@ -9,8 +9,7 @@ class DonorSerializer < ActiveModel::Serializer
     :address_state,
     :address_zip,
     :account_status,
-    :pickup_instructions,
-    :donations
+    :pickup_instructions
     # :business_license,        # commented out for pre-alpha
     # :business_phone_number,   # commented out for pre-alpha
     # :business_doc_id,         # commented out for pre-alpha

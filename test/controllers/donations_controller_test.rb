@@ -59,6 +59,7 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+<<<<<<< Updated upstream
   test "claims history returns list of closed claims" do
     get '/donations/1/history_claims', headers: auth_header({client_id: 1})
     assert_response :success
@@ -70,6 +71,8 @@ class DonationsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+=======
+>>>>>>> Stashed changes
   test "only updates to donations owned by logged in donor" do
     patch '/donations/2/update', params: {donation: {id:2, status:DonationStatus::DELETED}}, headers: auth_header({donor_id: 2})
     assert_response :unauthorized

@@ -18,6 +18,7 @@ class DonationsController < ApplicationController
 		render json: closed_donations_in_db
 	end
 
+<<<<<<< Updated upstream
 	def claims_history
 		id = params[:client_id].to_i
 		authorized_id = decoded_token[0]['client_id']
@@ -28,6 +29,8 @@ class DonationsController < ApplicationController
 		render json: closed_claims_in_db
 	end
 
+=======
+>>>>>>> Stashed changes
 	def active
 		@active_donations_in_db = Donation.where status: DonationStatus::ACTIVE
 		non_expired_donations = expire_donations(@active_donations_in_db)

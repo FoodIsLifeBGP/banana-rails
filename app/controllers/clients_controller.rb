@@ -84,11 +84,23 @@ class ClientsController < ApplicationController
     active_claims_for_client = Claim.where client_id: params[:id].to_i, status: ClaimStatus::ACTIVE
     donations = active_claims_for_client.map(&:donation)
     still_active = expire_donations(donations)
+
     if params[:client_lat] && params[:client_long]
       client_coords = [params[:client_lat].to_f, params[:client_long].to_f]
       still_active.each {|d| d.distance = d.donor.distance_to(client_coords)}
     end
+
     render json: still_active, status: :ok
+  end
+
+  def claims_history
+    id = params[:id].to_i
+    authorized_id = decoded_token[0]['client_id']
+    if authorized_id != id
+        return render json: { error: 'unauthorized'}, status: :unauthorized
+    end
+    closed_claims = Claim.where(:client_id => id, status: ClaimStatus::CLOSED).order("updated_at DESC").limit(50).map(&:donation)
+    render json: closed_claims, status: :ok
   end
 
   private

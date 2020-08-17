@@ -84,12 +84,10 @@ class ClientsController < ApplicationController
     active_claims_for_client = Claim.where client_id: params[:id].to_i, status: ClaimStatus::ACTIVE
     donations = active_claims_for_client.map(&:donation)
     still_active = expire_donations(donations)
-
     if params[:client_lat] && params[:client_long]
       client_coords = [params[:client_lat].to_f, params[:client_long].to_f]
       still_active.each {|d| d.distance = d.donor.distance_to(client_coords)}
     end
-
     render json: still_active, status: :ok
   end
 

@@ -56,7 +56,6 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 1, claims.size, 'should only be one active/pending claim'
   end
 
-<<<<<<< Updated upstream
   test "get travel times to donation for client" do
     coords = Geocoder.coordinates("800 8th Ave Seattle, WA")
     puts coords
@@ -68,17 +67,16 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
       assert_response :not_found
     end
   end
-=======
-test "claims history returns list of closed claims" do
-  get '/clients/2/claims_history', headers: auth_header({client_id: 1})
-  assert_response :success
-  history = JSON.parse @response.body
-  closed_claims = Claim.where(:client_id => 2, status: ClaimStatus::CLOSED)
-  assert_equal history.count, closed_claims.count, 'Incorrect number of claims received in the response'
-  closed_claims.each_with_index do |claim, i|
-      assert_equal claim.status, history[i]['status'], "The status of claim: #{history[i]['id']}, is invalid"
+
+  test "claims history returns list of closed claims" do
+    get '/clients/2/claims_history', headers: auth_header({client_id: 1})
+    assert_response :success
+    history = JSON.parse @response.body
+    closed_claims = Claim.where(:client_id => 2, status: ClaimStatus::CLOSED)
+    assert_equal history.count, closed_claims.count, 'Incorrect number of claims received in the response'
+    closed_claims.each_with_index do |claim, i|
+        assert_equal claim.status, history[i]['status'], "The status of claim: #{history[i]['id']}, is invalid"
   end
 end
->>>>>>> Stashed changes
 
 end

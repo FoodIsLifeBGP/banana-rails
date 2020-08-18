@@ -81,7 +81,12 @@ class ClientsController < ApplicationController
 
 
   def get_claims
-    active_claims_for_client = Claim.where client_id: params[:id].to_i, status: ClaimStatus::ACTIVE
+    id = params[:id].to_i
+    authorized_id = decoded_token[0]['client_id']
+    if authorized_id != id
+      return render json: { error: 'unauthorized'}, status: :unauthorized
+    end
+    active_claims_for_client = Claim.where client_id: id, status: ClaimStatus::ACTIVE
     donations = active_claims_for_client.map(&:donation)
     still_active = expire_donations(donations)
     if params[:client_lat] && params[:client_long]

@@ -58,7 +58,6 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
 
   test "get travel times to donation for client" do
     coords = Geocoder.coordinates("800 8th Ave Seattle, WA")
-    puts coords
     get "/clients/1/travel_times?client_lat=#{coords[0]}&client_long=#{coords[1]}", headers: auth_header({client_id: 1})
     #eventually we'll want to figure out how to pass this secret to tests
     if ENV["HERE_API_KEY"]
@@ -67,5 +66,16 @@ class ClientsControllerTest < ActionDispatch::IntegrationTest
       assert_response :not_found
     end
   end
+
+  test "claims history returns list of closed claims" do
+    get '/clients/1/claims_history', headers: auth_header({client_id: 1})
+    assert_response :success
+    history = JSON.parse @response.body
+    closed_claims = Claim.where(:client_id => 1, status: ClaimStatus::CLOSED)
+    assert_equal history.count, closed_claims.count, 'Incorrect number of claims received in the response'
+    closed_claims.each_with_index do |claim, i|
+      assert_equal claim.status, history[i]['claim']['status'], "The status of claim: #{history[i]['id']}, is invalid"
+  end
+end
 
 end

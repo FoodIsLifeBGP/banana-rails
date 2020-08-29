@@ -13,18 +13,39 @@ Banana App is an open-source, not-for-profit project of The Be Good Foundation. 
     
     - From the previous experience, developers using windows could suffer from configuring the environment, downloading the Postgres database and many other things like the version of ruby, and docker is a convenient solution to solve all those problems so beginners need only focus on project structure and project development. 
 - If you do not know docker before, just think it as a manager of virtual machines. Our project would run in those virtual machines with no dependency on the environment of your machine.
-  
+
 - Make sure there is no running program in your 5432 port, which is the default port for Postgresql where we would map the database container to. 
 
   - you might find `lsof -i:[port]` and `kill [pid]` useful
 
-- Run command
+- Next, download git from [official website ](https://git.scm.com/downloads) if you don't already have it. 
+- Once git is installed, open bash(that is, your Terminal) and type 
+
+`git --version`
+
+- If the git version is displayed, then git is configured correctly. 
+
+- In your Finder, go to a folder you want to copy the contents of the source code, right click on it. Either select the very last option `New Terminal at Folder` or the one above it `New Terminal Tab at Folder`. This will open up a new Terminal window already in that folder. 
+
+- From there, type `git clone` followed by [this website](https://github.com/FoodIsLifeBGP/banana-rails.git). 
+
+- This previous command will create a folder within your folder called *banana-rails*. From Finder, navigate to the *banana-rails* folder, right-click on it and select `New Terminal Tab at Folder`. This should lead you to a new Terminal tab already in the *banana-rails* directory. 
+
+- When you've navigated to the *banana-rails* directory in your Terminal tab, run command
 
   ```bash
   docker-compose up
   ```
 
   to build and run the docker environment.
+
+If this spits out an error message, try 
+
+  `docker-compose build`, then 
+  
+  `docker-compose up`
+  
+- This will run a container in which the back-end server will run. 
 
 - Visit ``http://localhost:3000`` on your browser if you see the information
 

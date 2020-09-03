@@ -353,8 +353,12 @@ claims.each { |c| create_claim(*c) }
 
 puts "Seeding Admins..."
 Admin.create!(
-	email: 'admin@admin.com',
-	password: 'admin',
+	email: "admin@admin.com",
+	password: "admin",
+    first_name: "Mathew",
+    last_name: "hill",
+    user_type: "admin",
+    user_status: AdminStatus::ACTIVE
 )
 
 puts "Finished with no errors"

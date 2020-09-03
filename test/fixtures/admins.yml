@@ -3,7 +3,15 @@
 one:
   email: MyString
   password_digest: MyString
+  first_name: John
+  last_name: Doe
+  user_type: admin
+  user_status: <%= AdminStatus::ACTIVE %>
 
 two:
   email: MyString
   password_digest: MyString
+  first_name: Sasha
+  last_name: Fierce
+  user_type: admin
+  user_status: <%= AdminStatus::ACTIVE %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_01_012821) do
+ActiveRecord::Schema.define(version: 2020_08_28_190856) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -21,6 +21,10 @@ ActiveRecord::Schema.define(version: 2020_08_01_012821) do
     t.string "password_digest"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "user_type"
+    t.string "user_status"
   end
 
   create_table "claims", force: :cascade do |t|

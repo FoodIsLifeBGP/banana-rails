@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_28_190856) do
+ActiveRecord::Schema.define(version: 2020_09_04_235345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2020_08_28_190856) do
     t.integer "document_id"
     t.string "phone_number"
     t.string "profile_pic_link"
+    t.integer "updated_by"
   end
 
   create_table "documents", force: :cascade do |t|
@@ -94,6 +95,7 @@ ActiveRecord::Schema.define(version: 2020_08_28_190856) do
     t.string "business_phone_number"
     t.integer "business_doc_id"
     t.string "profile_pic_link"
+    t.integer "updated_by"
     t.index ["latitude", "longitude"], name: "index_donors_on_latitude_and_longitude"
   end
 

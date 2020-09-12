@@ -17,14 +17,14 @@ Rails.application.routes.draw do
 
   get 'clients/:id/get_claims', to: 'clients#get_claims'
   get 'clients/:donorid/travel_times', to: 'clients#get_travel_times'
-  post 'client_auth', to: 'client_auth#create'
+  post 'clients/client_auth', to: 'client_auth#create'
   post 'clients/create', to: 'clients#create'
   patch 'clients/:id/updateStatus', to: 'clients#account_status_update'
   post 'clients/:id/get_donations', to: 'clients#get_donations'
   patch 'clients/:id/update', to: 'clients#update'
   get 'clients/:id/claims_history', to: 'clients#claims_history'
 
-  post 'admin_auth', to: 'admin_auth#create'
+  post 'admins/admin_auth', to: 'admin_auth#create'
 
   post 'claims/create', to: 'claims#create'
   patch 'claims/:id/update', to: 'claims#update'

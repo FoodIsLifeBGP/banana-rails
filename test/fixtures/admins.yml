@@ -1,10 +1,10 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email: MyString
-  password_digest: MyString
-  first_name: John
-  last_name: Doe
+  email: admin1@admin.com
+  password_digest: admin1@123
+  first_name: David
+  last_name: Jones
   user_type: admin
   user_status: <%= AdminStatus::ACTIVE %>
 

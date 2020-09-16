@@ -1,17 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  id: 1
   email: admin1@admin.com
-  password_digest: admin1@123
+  password_digest: $2a$12$88EEQDOOMv36zfvAE2C.u.4AuQxOiz3CJjsaYVM48D7nBSwO1x6aO
   first_name: David
   last_name: Jones
   user_type: admin
   user_status: <%= AdminStatus::ACTIVE %>
 
 two:
-  email: MyString
-  password_digest: MyString
+  id: 2
+  email: admin2@admin.com
+  password_digest: $2a$12$/uhMHzm.zS3.FyyilhZXTuQlb7Eb1X4.gDsD3TVYk5Uot.S.P/BKu
   first_name: Sasha
   last_name: Fierce
   user_type: admin
   user_status: <%= AdminStatus::ACTIVE %>
+  
+

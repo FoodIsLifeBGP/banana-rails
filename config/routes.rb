@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get 'clients/:id/claims_history', to: 'clients#claims_history'
 
   post 'admins/admin_auth', to: 'admin_auth#create'
+  get 'admins/:id/get_new_clients', to: 'admins#get_new_clients'
+  get 'admins/:id/get_new_donors', to: 'admins#get_new_donors'
+  get 'admins/:id/get_donations_status', to: 'admins#get_donations_status';
 
   post 'claims/create', to: 'claims#create'
   patch 'claims/:id/update', to: 'claims#update'

@@ -1,7 +1,7 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 first:
   id: 1
-  email: client@client.com
+  email: client1@client.com
   password_digest: $2a$12$hHrN9ZObSjBUT7f4Wg4Kh.EuRYd5sEyyih9zhur1VbFPTVv3zv4vO
   first_name: Client
   last_name: McClient
@@ -10,4 +10,30 @@ first:
   address_state: Washington
   address_zip: 98101
   account_status: active
+  ethnicity: White
+
+second:
+  id: 2
+  email: client2@client.com
+  password_digest: $2a$12$hHrN9ZObSjBUT7f4Wg4Kh.EuRYd5sEyyih9zhur1VbFPTVv3zv4vO
+  first_name: Client
+  last_name: McClient
+  address_street: 1422 5th Ave
+  address_city: Seattle
+  address_state: Washington
+  address_zip: 98101
+  account_status: processing
+  ethnicity: White
+
+third:
+  id: 3
+  email: client3@client.com
+  password_digest: $2a$12$hHrN9ZObSjBUT7f4Wg4Kh.EuRYd5sEyyih9zhur1VbFPTVv3zv4vO
+  first_name: Client
+  last_name: McClient
+  address_street: 1433 6th Ave
+  address_city: Seattle
+  address_state: Washington
+  address_zip: 98101
+  account_status: processing
   ethnicity: White

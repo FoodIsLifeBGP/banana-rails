@@ -3,7 +3,11 @@ class AdminAuthController < ApplicationController
 
 	def create
 		@admin = Admin.find_by(email: admin_login_params[:email])
+        password = admin_login_params[:password]
 		#User#authenticate comes from BCrypt
+        if password.nil? || password.empty?
+            return render json: { error: 'password is empty' }, status: :bad_request
+        end
 		if @admin && @admin.authenticate(admin_login_params[:password])
 			# encode token comes from ApplicationController
 			session[:admin_id] = @admin.id

@@ -45,7 +45,7 @@ class ApplicationController < ActionController::API
     end
 
   def health
-    render json: { message: 'I am healthy' }, status: :ok
+    render json: { message: 'I am extra healthy' }, status: :ok
   end
 
   def expire_donations(donations)

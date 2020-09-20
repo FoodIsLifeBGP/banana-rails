@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-	before_action :authorized
+	before_action :authorized, :except => :health
 
     def encode_token(payload)
       JWT.encode(payload, Rails.application.secrets.secret_key_base)
@@ -43,6 +43,10 @@ class ApplicationController < ActionController::API
     def authorized
       render json: { message: 'Please log in' }, status: :unauthorized unless logged_in?
     end
+
+  def health
+    render json: { message: 'I am healthy' }, status: :ok
+  end
 
   def expire_donations(donations)
     active = Array.new

@@ -81,6 +81,4 @@ test:
 # url: 'postgres://banana_app:mael57lj560C7s7Gk1pa@backenddev.cgdyyelenxkg.us-east-2.rds.amazonaws.com:5432/postgres'
 production:
   <<: *default
-  database: backend_production
-  username: backend
-  password: <%= ENV['BACKEND_DATABASE_PASSWORD']%>
+  database: banana

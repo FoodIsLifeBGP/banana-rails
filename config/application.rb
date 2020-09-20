@@ -33,6 +33,7 @@ module Backend
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
     config.autoload_paths += %W(#{config.root}/app/util)
+    config.autoloader = :classic
   end
 end
 

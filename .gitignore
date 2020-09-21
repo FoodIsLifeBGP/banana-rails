@@ -23,3 +23,9 @@
 # Ignore docker local storage of containers
 /tmp/*
 dev.env
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+/config/credentials/production.key

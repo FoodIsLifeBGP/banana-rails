@@ -2,7 +2,7 @@ version: 2
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
     docker: # run the steps with Docker
-      - image: rubylang/ruby:2.6.3-bionic
+      - image: rubylang/ruby:2.6.6-bionic
         environment: # environment variables for primary container
           BUNDLE_JOBS: 3
           BUNDLE_RETRY: 3
@@ -39,8 +39,8 @@ jobs: # a collection of steps
 
       # Which version of bundler?
       - run:
-          name: Which bundler?
-          command: bundle -v
+          name: Install bundler
+          command: gem install bundler:2.1.4
 
       # Restore bundle cache
       # Read about caching dependencies: https://circleci.com/docs/2.0/caching/

@@ -16,7 +16,8 @@ class ApplicationController < ActionController::API
         # header: { 'Authorization': 'Bearer <token>' }
         begin
           JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
-        rescue => exception
+        rescue JWT::DecodeError => exception
+          puts exception
           puts exception.backtrace
           raise
         end

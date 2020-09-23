@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
 	before_action :authorized, :except => :health
 
     def encode_token(payload)
-      JWT.encode(payload, Rails.application.secrets.secret_key_base)
+      JWT.encode(payload, Rails.application.secret_key_base)
     end
 
     def auth_header
@@ -13,8 +13,6 @@ class ApplicationController < ActionController::API
     def decoded_token
       if auth_header
         token = auth_header.split(' ')[1]
-        puts "header: { 'Authorization': 'Bearer <token>' }"
-        puts "Secret key base #{Rails.application.secret_key_base}"
         begin
           JWT.decode(token, Rails.application.secret_key_base, true, algorithm: 'HS256')
         rescue JWT::DecodeError => exception

@@ -7,12 +7,7 @@ class AdminsController < ApplicationController
 		if @admin.valid?
 			@token = encode_token(admin_id: @admin.id)
 			session[:admin_id] = @admin.id
-
-			if @admin.save
-				# Tell the StatusMailer to send a welcome email after save
-				StatusMailer.with(user: @admin).received_application(@admin).deliver_later
-			end
-			render json: { donor: AdminSerializer.new(@donor), jwt: @token }, status: :created
+			render json: { donor: AdminSerializer.new(@admin), jwt: @token }, status: :created
 		else
 			not_created_user = {email: @admin.email, first_name: @admin.first_name}
 			StatusMailer.with(user: not_created_user).account_incomplete(not_created_user).deliver_later

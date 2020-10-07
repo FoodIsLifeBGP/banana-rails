@@ -23,21 +23,25 @@ class ApplicationController < ActionController::API
       end
     end
 
-    def current_donor
+    # Find current user (admin, donor, or client) by user id
+    def current_user
       if decoded_token
         donor_id = decoded_token[0]['donor_id']
         client_id = decoded_token[0]['client_id']
+        admin_id = decoded_token[0]['admin_id']
         @user = nil
         if donor_id
           @user = Donor.find(donor_id)
         elsif client_id
           @user = Client.find(client_id)
+        elsif admin_id
+          @user = Admin.find(admin_id)
         end
       end
     end
 
     def logged_in?
-      !!current_donor
+      !!current_user
     end
 
     def authorized

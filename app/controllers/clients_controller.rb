@@ -20,6 +20,7 @@ class ClientsController < ApplicationController
     if @client.valid?
       @token = encode_token(client_id: @client.id)
       render json: { client: ClientSerializer.new(@client), jwt: @token }, status: :created
+      EmailInviteMailer.with(user: @client).send_reg_invite(@client).deliver_later
     else
         render json: { error: 'failed to create client', errors: @client.errors.full_messages}, status: :bad_request
     end

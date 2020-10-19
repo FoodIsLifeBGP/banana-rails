@@ -353,10 +353,19 @@ claims.each { |c| create_claim(*c) }
 
 puts "Seeding Admins..."
 Admin.create!(
-	email: "admin@admin.com",
-	password: "admin",
+	email: "admin1@admin.com",
+	password: "admin1@123",
     first_name: "Mathew",
     last_name: "hill",
+    user_type: "admin",
+    user_status: AdminStatus::ACTIVE
+)
+
+Admin.create!(
+    email: "admin2@admin.com",
+    password: "admin2@123",
+    first_name: "Trent",
+    last_name: "Taylor",
     user_type: "admin",
     user_status: AdminStatus::ACTIVE
 )

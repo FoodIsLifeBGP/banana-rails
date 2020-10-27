@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "com.thebegoodproject.org.bananaapp",
+        "paths": ["*"]
+      },
+      {
+        "appID": "com.thebegoodproject.org.bananaapp-client",
+        "paths": ["*"]
+      }
+    ]
+  }
+}

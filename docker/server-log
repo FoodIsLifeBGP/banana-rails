@@ -1,6 +1,14 @@
 #!/bin/bash
 set +e
 
+echo '-------------------'
+echo 'docker-compose stop'
+docker-compose stop
+
+echo '--------------------'
+echo 'sudo rm -rf tmp/pids'
+sudo rm -rf tmp/pids
+
 echo '########################'
 echo 'BEGIN: docker-compose up'
 echo '########################'

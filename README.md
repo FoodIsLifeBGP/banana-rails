@@ -2,7 +2,45 @@
 
 Banana App is an open-source, not-for-profit project of The Be Good Foundation.  We can reduce hunger by simplifying food donation.  We make it easy for grocery stores and restaurants to donate good food that would otherwise be disposed of.  Users will be able to find active donations, view the business's food rating, and claim a portion.
 
-# Installation for Mac(Docker)
+# Automatic Installation for Mac/Linux (Docker)
+- Install Docker from [official website ](https://hub.docker.com/?overlay=onboarding) (Take the tutorial if you want)
+- Next, download git from [official website ](https://git.scm.com/downloads) if you don't already have it. 
+- Once git is installed, open bash(that is, your Terminal) and type 
+
+`git --version`
+
+- If the git version is displayed, then git is configured correctly. 
+- Open a terminal window, and use the "cd" command to go to the folder where you wish to download this app.
+- From there, type `git clone` followed by [this website](https://github.com/FoodIsLifeBGP/banana-rails.git). 
+- When you've navigated to the *banana-rails* directory in your Terminal tab, run command
+
+  ```bash
+  docker/build
+  ```
+
+  to build the Docker environment, seed the database, and run the test suite.
+
+- Run the command 
+
+  ```bash
+  docker/build
+  ```
+
+  to run container dedicated to the back-end server.
+
+- Visit ``http://localhost:3000`` on your browser if you see the information
+
+  ```json
+  {
+  	"message": "Please log in."
+  }
+  ```
+
+  Then you're done! You can now move on to installing the Donor, Client, or Admin apps at the following URLs:
+
+  **[Donor/Client](https://github.com/FoodIsLifeBGP/banana-rn)**
+
+# Manual Installation for Mac/Linux (Docker)
 
 - Install Docker from [official website ](https://hub.docker.com/?overlay=onboarding) (Take the tutorial if you want)
   - a brief introduction for docker:
@@ -63,7 +101,7 @@ If this spits out an error message, try
 
   - The underlying mechanism is that docker synchronizes the files between project directory and container directory. For more details, look at comment at `volumes` configuration under `docker-compose.yml` file in the project root directory.
 
-# Installation for windows (Docker)
+# Manual Installation for Windows (Docker)
 
 - Install Docker from [official website ](https://hub.docker.com/?overlay=onboarding) 
 

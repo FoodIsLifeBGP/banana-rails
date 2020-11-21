@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+echo '---------------------------------------'
+echo 'docker-compose run web rails db:migrate'
+docker-compose run web rails db:migrate
+
+echo '---------------------------------'
+echo 'docker-compose run web rails test'
+docker-compose run web rails test

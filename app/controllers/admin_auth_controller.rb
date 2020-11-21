@@ -2,13 +2,13 @@ class AdminAuthController < ApplicationController
 	skip_before_action :authorized, only: [:create]
 
 	def create
-		@donor = Admin.find_by(email: donor_login_params[:email])
+		@admin = Admin.find_by(email: admin_login_params[:email])
 		#User#authenticate comes from BCrypt
-		if @donor && @donor.authenticate(donor_login_params[:password])
+		if @admin && @admin.authenticate(admin_login_params[:password])
 			# encode token comes from ApplicationController
-			session[:donor_id] = @donor.id
-			token = encode_token({ donor_id: @donor.id })
-			render json: { donor: AdminSerializer.new(@donor), jwt: token }, status: :accepted
+			session[:admin_id] = @admin.id
+			token = encode_token({ admin_id: @admin.id })
+			render json: { admin: AdminSerializer.new(@admin), jwt: token }, status: :accepted
 		else
 			render json: { message: 'Invalid email or password' }, status: :unauthorized
 		end
@@ -16,7 +16,7 @@ class AdminAuthController < ApplicationController
 
 	private
 
-	def donor_login_params
-		params.require(:donor).permit(:email, :password)
+	def admin_login_params
+		params.require(:admin).permit(:email, :password)
 	end
 end

@@ -1,7 +1,8 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email: MyString
+  id: 1
+  email: admin1@admin.com
   password_digest: MyString
   first_name: John
   last_name: Doe
@@ -9,7 +10,8 @@ one:
   user_status: <%= AdminStatus::ACTIVE %>
 
 two:
-  email: MyString
+  id: 2
+  email: admin2@admin.com
   password_digest: MyString
   first_name: Sasha
   last_name: Fierce

@@ -4,4 +4,17 @@ set -e
 # This script builds the Docker container, seeds the app with sample data, and logs the screen output.
 
 DATE=`date +%Y%m%d-%H%M%S-%3N`
-docker/build-log 2>&1 | tee log/build-$DATE.log
+mkdir log/$DATE
+docker/build-log 2>&1 | tee log//$DATE/build.log
+wait
+docker/seed 2>&1 | tee log/$DATE/seed.log
+wait
+docker/test-log 2>&1 | tee log/$DATE/test.log
+wait
+echo '******************************'
+echo 'The build process is complete!'
+echo ''
+echo "The logs are in the log/$DATE directory."
+echo ''
+echo 'If all went well, all the tests passed.'
+echo ''

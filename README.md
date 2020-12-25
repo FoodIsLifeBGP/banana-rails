@@ -1,5 +1,7 @@
 # THE BANANA APP: Ruby on Rails/Postgres backend
 
+[![CircleCI](https://circleci.com/gh/FoodIsLifeBGP/banana-rails.svg?style=svg)](https://app.circleci.com/pipelines/github/FoodIsLifeBGP/banana-rails)
+
 Banana App is an open-source, not-for-profit project of The Be Good Foundation.  We can reduce hunger by simplifying food donation.  We make it easy for grocery stores and restaurants to donate good food that would otherwise be disposed of.  Users will be able to find active donations, view the business's food rating, and claim a portion.
 
 # Installation for Mac(Docker)
